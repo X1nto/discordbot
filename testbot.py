@@ -11,15 +11,18 @@ TOKEN = os.getenv('TOKEN')
 
 client = discord.Client()
 
+#this script types "Connected!" in terminal if nothing has gone wrong    
 @client.event
 async def on_ready():
     print('Connected!')        
 
+#this script makes sure that bot doesn't reply to itself
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return
-
+ 
+    #starting from this, we can set our custom outputs to custom commands
     if message.content.startswith('!hello'):
        await message.channel.send('Hi')
     
