@@ -1,0 +1,16 @@
+import discord
+from discord.ext import commands
+
+class help(commands.Cog):
+
+    def __init__(self, client):
+        self.client = client
+
+    @commands.command()
+    async def help(self, ctx):
+        await ctx.send('Help menu \n !random-რანდომ სურათის გამოსახვა \n !bozi-ამას უნდა მიხვდეთ \n !დღის ბოზი-გვაჩვენებს დღის ბოზს \n !about-ვინ შექმნა ეს მშვენიერი და ლამაზი ბოტი \n !about-ეს მენიუ')
+
+def setup(client):
+    client.add_cog(help(client))
+
+
