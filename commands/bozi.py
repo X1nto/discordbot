@@ -9,6 +9,7 @@ class bozi(commands.Cog):
 
     @commands.command()
     async def bozi(self, ctx):
+       os.chdir('/home/xinto/discordbot/commands/images')
        await ctx.send('', file=discord.File('bozi.jpg'))
 
 def setup(client):

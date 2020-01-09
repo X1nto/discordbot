@@ -9,6 +9,7 @@ class image(commands.Cog):
 
     @commands.command()
     async def image(self, ctx):
+        os.chdir('/home/xinto/discordbot/commands/images')
         await ctx.send('Here ya go', file=discord.File('owl.jpg'))
 
 def setup(client):
