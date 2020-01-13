@@ -3,6 +3,7 @@ import random
 from discord.ext import commands
 
 class dgisbozi(commands.Cog):
+    """ირჩევს რანდომ დღის ბოზს"""
 
     def __init__(self, bot):
         self.bot = bot

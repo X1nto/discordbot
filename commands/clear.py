@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 
 class clear(commands.Cog):
+    """ჩატის გაწმენდა"""
 
     def __init__(self, bot):
         self.bot = bot

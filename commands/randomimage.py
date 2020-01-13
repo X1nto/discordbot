@@ -4,6 +4,7 @@ import random
 from discord.ext import commands
 
 class randomimage(commands.Cog):
+    """ტესტირებისთვის 2"""
 
     def __init__(self, bot):
         self.bot = bot

@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 
 class about(commands.Cog):
+    """ამ ბოტის შესახებ"""
 
     def __init__(self, bot):
         self.bot = bot

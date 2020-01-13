@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 
 class hello(commands.Cog):
+    """გამარჯობა"""
 
     def __init__(self, bot):
         self.bot = bot

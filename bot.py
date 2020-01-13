@@ -10,6 +10,7 @@ load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
 bot = commands.Bot(command_prefix = '.')
+bot.remove_command('help')
 
 #this script types "Connected!" in terminal if nothing has gone wrong    
 @bot.event

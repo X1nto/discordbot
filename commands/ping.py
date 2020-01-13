@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 
 class ping(commands.Cog):
+    """პინგის შემოწმება"""
     
     def __init__(self, bot): 
         self.bot = bot
