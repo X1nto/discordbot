@@ -9,6 +9,7 @@ class hello(commands.Cog):
 
     @commands.command()
     async def hello(self, ctx):
+        """ზდ"""
         await ctx.send('Hi')
 
 def setup(client):

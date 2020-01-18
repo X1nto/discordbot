@@ -10,6 +10,7 @@ class dgisbozi(commands.Cog):
 
     @commands.command()
     async def dgisbozi(self, ctx):
+        """იმედია ამას ახსნა არ სჭირდება"""
         user = random.choice(ctx.guild.members)
         await ctx.send('დღის ბოზი არის %s' % user.mention)
 

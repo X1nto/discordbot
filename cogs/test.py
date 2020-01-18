@@ -9,6 +9,7 @@ class test(commands.Cog):
 
     @commands.command()
     async def test(self, ctx):
+        """აზრზე არ ვარ ეს რისთვის გავაკეთე"""
         await ctx.send('nibba')
 
 def setup(client):

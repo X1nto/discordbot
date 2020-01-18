@@ -9,6 +9,7 @@ class hola(commands.Cog):
 
     @commands.command()
     async def hola(self, ctx):
+        """Bienvenido!"""
         await ctx.send('hola amigos!')
 
 def setup(client):
