@@ -1,19 +1,31 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const config = require('config');
+const { prefix, token, devs } = require('config');
+
 const client = new Discord.Client();
-
 client.commands = new Discord.Collection();
-
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
-}
+fs.readdirSync('./commands').forEach(folder => {
+    const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+    for (const file of commandFiles) {
+        const command = require(`./commands/${folder}/${file}`);
+        client.commands.set(command.name, command);
+    }
+});
 
 client.once('ready', () => {
-	console.log('Connected!');
+    client.user.setPresence({
+        game: {
+            name: `${config.prefix}help`,
+            type: 'PLAYING',
+        }
+    });
+
+    console.log(`Successfully logged in as ${client.user.username} - ${client.user.id}\nServing ${client.guilds.size} guilds\nPrefix: ${config.prefix}`);
+
+    Object.keys(config.reactionRoles).forEach(message => {
+        client.channels.get(config.reactionRoles[message].channel).fetchMessage(message).then(msg => msg.react('✅'));
+    });
 });
 
 client.on('message', message => {

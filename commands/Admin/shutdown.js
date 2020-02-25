@@ -1,4 +1,3 @@
-const { adminid } = require('config');
 module.exports = {
     name: 'shutdown',
     description: 'ბოტის გათიშვა (მხოლოდ ადმინებისთვის)',
