@@ -8,7 +8,7 @@ module.exports = {
     modCommand: false,
     category: 'Admin',
     execute(message, args) {
-        if (!args.length) return message.channel.send(`მიუთითეთ ბრძანების სახელი, ${message.author}!`);
+        if (!args.length) return message.channel.send(`მიუთითეთ ბრძანების სახელი`);
 
         if (args[0] == 'all') {
             var output = []
@@ -18,10 +18,10 @@ module.exports = {
                 helper = message.client.commands.get(k)
                         || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(k));
                 commands = helper.name
-                delete require.cache[require.resolve(`./${commands}.js`)];
+                delete require.cache[require.resolve(`../${folder}/${commands}.js`)];
 
                 try {
-                    const newCommand = require(`./${commands}.js`);
+                    const newCommand = require(`../${folder}/${commands}.js`);
                     message.client.commands.set(newCommand.name, newCommand);
                 } catch (error) {
                     console.log(error);
@@ -42,7 +42,7 @@ module.exports = {
         delete require.cache[require.resolve(`./${commandFinal}.js`)];
 
         try {
-            const newCommand = require(`./${commandFinal}.js`);
+            const newCommand = require(`../${folder}${commandFinal}.js`);
             message.client.commands.set(newCommand.name, newCommand);
         } catch (error) {
             console.log(error);

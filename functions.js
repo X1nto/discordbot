@@ -5,6 +5,11 @@ module.exports = {
     newEmbed() {
         return new Discord.RichEmbed().setTimestamp().setColor(Math.random().toString(16).slice(2, 8).toUpperCase());
     },
+    logError(err, client, msg) {
+        if (msg)
+            msg.reply('უპს, მოხდა შეცდომა. იხილეთ ლოგები').then(message => message.delete(3000));
+        console.error(err);
+    },
     getRole(message, args, spot) {
         const roleInput = args[spot];
         let role = message.guild.roles.get(roleInput);
@@ -13,7 +18,7 @@ module.exports = {
         return role ? role : false;
     },
     noRole(message) {
-        message.reply('არასწორი როლი!"')
+        message.reply('არასწორი როლი')
             .then(message => message.delete(3000));
     },
     getMember(message, args, spot) {
@@ -24,7 +29,7 @@ module.exports = {
         return member ? member : false;
     },
     noMember(message) {
-        message.reply('არასწორი წევრი!')
+        message.reply('არასწორი წევრი')
             .then(message => message.delete(3000));
     },
     errorMessage(message, text) {
@@ -37,30 +42,6 @@ module.exports = {
     },
     isMemberHigher(member1, member2) {
         return member1.highestRole.comparePositionTo(member2.highestRole) > 0;
-    },
-    filterMessages(message) {
-        const redacted = [];
-        let text = message.content;
-        config.bannedWords.forEach(word => {
-            if (text.toLowerCase().includes(word))
-                redacted.push(word);
-        });
-        if (!redacted.length)
-            return;
-        redacted.forEach(word => {
-            text = text.replace(new RegExp(word, 'gi'), '####################################################'.substring(0, word.length));
-        });
-        message.delete(1000);
-        const output = new Discord.RichEmbed().setTimestamp().setColor(Math.random().toString(16).slice(2, 8).toUpperCase())
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
-            .setDescription(text)
-            .setFooter('წაშლილია რადგან შეიცავდა დაბანულ სიტყვებს');
-        message.channel.send(output);
-        output
-            .setDescription(message.content)
-            .addField('დაბანული სიტყვები', '```' + redacted.join(', ') + '```')
-            .setTitle('განგაში');
-        message.client.channels.get(config.modLogChannel).send(output);
     },
     async imageStore(message, image) {
         const msg = await message.client.channels.get(config.imageStorage).send({

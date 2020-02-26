@@ -1,7 +1,7 @@
 const fs = require('fs');
+const functions = require('./functions.js')
 const Discord = require('discord.js');
 const config = require('config');
-const { prefix, token, devs } = require('config');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -21,15 +21,15 @@ client.once('ready', () => {
         }
     });
 
-    console.log(`Successfully logged in as ${client.user.username} - ${client.user.id}\nServing ${client.guilds.size} guilds\nPrefix: ${config.prefix}`);
+    console.log(`Successfully logged in as ${client.user.username} - ${client.user.id}`);
 
-    Object.keys(config.reactionRoles).forEach(message => {
-        client.channels.get(config.reactionRoles[message].channel).fetchMessage(message).then(msg => msg.react('✅'));
-    });
 });
 
-client.on('message', message => {
-	console.log(message.content);
+client.on('error', error => {
+    functions.logError(error, client);
+});
+client.on('warn', warn => {
+    functions.logError(warn, client);
 });
 
 client.on('message', message => {
@@ -40,7 +40,7 @@ client.on('message', message => {
     if (config.blockedChannels.includes(message.channel.id))
         return;
     if (message.isMentioned(client.user))
-        message.channel.send(`**Prefix:** ${config.prefix}\nFor a list of commands, type \`${config.prefix}help\``);
+        message.channel.send(`**პრეფიქსი:** ${config.prefix}\nბრძანებების ჩამონსთვალისთვის, აკრიფეთ \`${config.prefix}help\``);
     if (message.guild)
         if (!message.channel.permissionsFor(message.member).has('MANAGE_MESSAGES')) functions.filterMessages(message);
     if (!message.content.startsWith(config.prefix))
@@ -55,19 +55,19 @@ client.on('message', message => {
     if (!command) return;
     if (command.developersOnly && !config.developers.includes(message.author.id)) return;
     if (command.guildOnly && !message.guild)
-        return functions.errorMessage(message, 'This command can only be used on a server!');
+        return functions.errorMessage(message, 'ამ ბრძანების გამოყენება მხოლოდ სერვერრზეა შესაძლებელი');
     if (command.memberPermission && !message.channel.permissionsFor(message.member).has(command.memberPermission))
-        return functions.errorMessage(message, `You cannot use this command as it requires you to have the \`${command.memberPermission}\` Permission!`);
+        return functions.errorMessage(message, `ბრძანების გამოსაყენებლად უნდა გქონდეთ\`${command.memberPermission}\` უფლება!`);
     if (command.botPermission && !message.channel.permissionsFor(message.guild.me).has(command.botPermission))
-        return functions.errorMessage(message, `I require the \`${command.botPermission}\` Permission to do this!`);
+        return functions.errorMessage(message, `მე მჭირდება \`${command.botPermission}\` უფლება ამისთვის!`);
     if (command.args && !args.length)
-        return functions.errorMessage(message, `Missing input. Please refer to the \`${config.prefix}help ${command.name}\` page.`);
+        return functions.errorMessage(message, `არასწორი სინტაქსი. გამოიყენეთ \`${config.prefix}help ${command.name}\` დახმარებისთვის.`);
 
     try {
-        command.execute(message, args, sfw);
+        command.execute(message, args);
     } catch (error) {
         functions.logError(error, client, message);
     }
 });
 
-client.login(token);
+client.login(config.token);

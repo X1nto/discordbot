@@ -1,5 +1,15 @@
 {
 	"prefix": ".",
-	"token": "<your-token-here>"
-} 
- 
+	"token": "<your-token>",
+    "developers": ["<dev-id>"],
+    "errorChannel": "<your-error-channel>",
+    "modLogChannel": "your-log-channel",
+    "imageStorage": "/images",
+    "blockedChannels": "<your-blocked-channel>",
+    "reactionRoles": {
+      "messageID": {
+        "role": "<role>",
+        "channel": "<channel>"
+    }
+  }
+}
