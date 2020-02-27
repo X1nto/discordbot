@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const config = require('config');
 
+exports.Discord = Discord;
 module.exports = {
     newEmbed() {
         return new Discord.RichEmbed().setTimestamp().setColor(Math.random().toString(16).slice(2, 8).toUpperCase());

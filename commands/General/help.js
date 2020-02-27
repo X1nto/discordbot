@@ -37,10 +37,10 @@ module.exports = {
                 }
             }
             output
-                .setTitle("აქ არის ყველა შესაძლო ბრძანება")
-                .addField('მთავარი ბრძანებები', generalCommandList.join('\n'), false)
-                .addField('მოდერატორის ბრძანებები', modCommandList.join('\n'), false)
-                .addField('სხვ. ბრძანებები', miscCommandList.join('\n'), false)
+                .setTitle("**აქ არის ყველა შესაძლო ბრძანება**")
+                .addField('**მთავარი ბრძანებები**', generalCommandList.join('\n'), false)
+                .addField('**მოდერატორებისთვის**', modCommandList.join('\n'), false)
+                .addField('**სხვ.**', miscCommandList.join('\n'), false)
                 .setFooter(`აკრიფეთ ${config.prefix}help [ბრძანების სახელი] ამ ბრძანებაზე დახმარების მისაღებად.`)
             return message.channel.send(output)
         }
