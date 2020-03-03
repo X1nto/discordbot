@@ -9,10 +9,10 @@ module.exports = {
     modCommand: false,
     category: 'General',
     execute(message, args) {
-      const output = functions.newEmbed().setAuthor(message.author.avatarURL)
+      const output = functions.newEmbed()
         output
-            .setTitle("About this bot")
-            .setDescription(`This bot was created by <@423915768191647755>`);
+          .setTitle("About this bot")
+          .setDescription(`This bot was created by <@423915768191647755>`);
         return message.channel.send(output)
     },
 }; 

@@ -14,7 +14,7 @@
   "homepage": "https://github.com/X1nto/discordbot#readme",
   "dependencies": {
     "config": "^3.2.6",
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.0.1",
     "fs": "0.0.1-security",
     "node-fetch": "^2.6.0"
   }

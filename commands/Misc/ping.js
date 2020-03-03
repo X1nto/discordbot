@@ -10,7 +10,7 @@ module.exports = {
     modCommand: false,
     category: 'Misc',
     execute(message, args) {
-        return message.channel.send(`პინგი: \`${Math.floor(message.client.ping)}ms\``)
+        return message.channel.send(`პინგი: \`${Math.floor(message.client.ws.ping)}ms\``)
     }
 }
 

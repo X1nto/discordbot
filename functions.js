@@ -4,7 +4,7 @@ const config = require('config');
 exports.Discord = Discord;
 module.exports = {
     newEmbed() {
-        return new Discord.RichEmbed().setTimestamp().setColor(Math.random().toString(16).slice(2, 8).toUpperCase());
+        return new Discord.MessageEmbed().setTimestamp().setColor(Math.random().toString(16).slice(2, 8).toUpperCase());
     },
     logError(err, client, msg) {
         if (msg)
@@ -13,9 +13,9 @@ module.exports = {
     },
     getRole(message, args, spot) {
         const roleInput = args[spot];
-        let role = message.guild.roles.get(roleInput);
-        if (!role) role = message.guild.roles.get(roleInput.substring(3, roleInput.length - 1));
-        if (!role) role = message.guild.roles.find(role => role.name.substring(0, roleInput.length).toLowerCase() === roleInput.toLowerCase());
+        let role = message.guild.roles.cache.get(roleInput);
+        if (!role) role = message.guild.roles.cache.get(roleInput.substring(3, roleInput.length - 1));
+        if (!role) role = message.guild.roles.cache.find(role => role.name.substring(0, roleInput.length).toLowerCase() === roleInput.toLowerCase());
         return role ? role : false;
     },
     noRole(message) {
@@ -24,9 +24,9 @@ module.exports = {
     },
     getMember(message, args, spot) {
         const memberInput = args[spot];
-        let member = message.guild.members.get(memberInput);
-        if (!member) member = message.guild.members.get(memberInput.substring(3, memberInput.length - 1));
-        if (!member) member = message.guild.members.some(member => member.user.username.substring(0, memberInput.length).toLowerCase() === memberInput.toLowerCase()) ? 'reactions' : false;
+        let member = message.guild.members.cache.get(memberInput);
+        if (!member) member = message.guild.members.cache.get(memberInput.substring(3, memberInput.length - 1));
+        if (!member) member = message.guild.members.cache.some(member => member.user.username.substring(0, memberInput.length).toLowerCase() === memberInput.toLowerCase()) ? 'reactions' : false;
         return member ? member : false;
     },
     noMember(message) {
@@ -45,7 +45,7 @@ module.exports = {
         return member1.highestRole.comparePositionTo(member2.highestRole) > 0;
     },
     async imageStore(message, image) {
-        const msg = await message.client.channels.get(config.imageStorage).send({
+        const msg = await message.client.channels.cache.get(config.imageStorage).send({
             files: [
                 {
                     attachment: image,

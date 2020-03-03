@@ -3,6 +3,15 @@ const functions = require('./functions.js')
 const Discord = require('discord.js');
 const config = require('config');
 
+const timers = new Map();
+function setCooldown(commandName, cooldown) {
+    if (timers.has(commandName))
+        return;
+    timers.set(commandName, setTimeout(function () {
+        timers.delete(commandName);
+    }, 1000 * cooldown));
+}
+
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 fs.readdirSync('./commands').forEach(folder => {
@@ -39,8 +48,8 @@ client.on('message', message => {
         return;
     if (config.blockedChannels.includes(message.channel.id))
         return;
-    if (message.isMentioned(client.user))
-        message.channel.send(`**პრეფიქსი:** ${config.prefix}\nბრძანებების ჩამონსთვალისთვის, აკრიფეთ \`${config.prefix}help\``);
+    if (message.mentions.has(client.user))
+        message.channel.send(`**პრეფიქსი:** ${config.prefix}\nბრძანებების ჩამონათვალისთვის, აკრიფეთ \`${config.prefix}help\``);
     if (message.guild)
         if (!message.channel.permissionsFor(message.member).has('MANAGE_MESSAGES')) functions.filterMessages(message);
     if (!message.content.startsWith(config.prefix))
@@ -64,6 +73,11 @@ client.on('message', message => {
         return functions.errorMessage(message, `არასწორი სინტაქსი. გამოიყენეთ \`${config.prefix}help ${command.name}\` დახმარებისთვის.`);
 
     try {
+        if(command.cooldown) {
+            if(timers.has(command.name))
+                return message.channel.send('this command is on cooldown!');
+        setCooldown(command.name, command.cooldown);
+        }
         command.execute(message, args);
     } catch (error) {
         functions.logError(error, client, message);
