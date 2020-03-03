@@ -1,5 +1,5 @@
 const fs = require('fs');
-const functions = require('./functions.js')
+const functions = require('./functions.js');
 const Discord = require('discord.js');
 const config = require('config');
 

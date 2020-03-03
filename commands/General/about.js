@@ -1,4 +1,5 @@
 const functions = require('../../functions.js')
+const config = require('config')
 module.exports = {
     name: 'about',
     description: 'ბოტის შესახებ',
